@@ -26,20 +26,20 @@
                     </div>
                     <div class="col">
                         <label>
-                        <a href="#" class="bulle"> 
+                        <a href="#" data-toggle="tooltip" title="Si ce nombre est proche de 1 l'épidémie peut s'arrêter spontanément car les malades guérissent trop rapidement"> 
                             Nombre initial de malade(s)
-                            <!--
-                            <span>Si le nombre initial de malades est proche de 1, il y a des chances que l'épidémie s'arrête spontanémant, car les malades peuvent guérir trop rapidement</span>
-                            -->
+    
+
                         </a>
                         </label>
                         <input class="form-control" id="populationMalade"  type="number" min="1" max="1000" step="1" value="1"/>
                     </div>
                     <div class="col ">
-                        <label><a href="#" class="bulle"> R (Taux de contamination)
+                        <label>
+                            <a href="#" data-toggle="tooltip" title="Nombre moyen de personnes que contamine un malade. Le covid-19 est entre 2 et 4 sans mesures particulières et autour de 0.5 avec un confinement"> R (Taux de contamination)
                             <!--
                             <span>
-                                Nombre moyen de personnes que contamine un malade. Le covid-19 est entre 2 et 4 sans mesures particulières et autour de 0.5 avec un confinement
+                                
                             </span>
                         -->
                         </a> </label> 
@@ -47,7 +47,7 @@
                     </div>
                     <div class="col">
                         
-                        <label> <a href="#" class="bulle">Population totale (approximative)
+                        <label> <a href="#" data-toggle="tooltip" title="Taille approximative de la population dans laquelle se propage le virus : un nombre trop grand peut engendrer un blocage du navigateur">Population totale (approximative)
                             <!--
                             <span>Taille approximative de la population dans laquelle se propage le virus : un nombre trop grand peut engendrer un blocage du navigateur</span>
                             -->
@@ -74,6 +74,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script src="toastr.js"></script>
-
+    <script>
+        $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+        </script>
     <script src="covid.js"></script>
 </html>

@@ -57,8 +57,11 @@
                             Une personne malade va chaque semaine contaminer un nombre de malade déterminé par R, le taux de contamination. 
                         </p>
                         <p>
+                            
+                            <a href="#" data-toggle="tooltip" title="Hooray!">Hover over me</a>
+
                             Un R > 1 a pour effet une augmentation exponentielle du nombre de nouveaux cas 
-                            (<a href="https://fr.wikipedia.org/wiki/Nombre_de_reproduction_de_base"> R vaut entre 2 et 4 pour le COVID-19 sans mesure de distanciation)</a>
+                            (<a href="https://fr.wikipedia.org/wiki/Nombre_de_reproduction_de_base">R vaut entre 2 et 4 pour le COVID-19 sans mesure de distanciation)</a>
                             <br>
                             Un R = 1 a pour effet la stabilisation du nombre de nouveaux cas (difficilement atteignable en pratique)
                             <br>
@@ -91,11 +94,17 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script src="toastr.js"></script>
+    <script>
+        $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+        </script>
 
     <!--<script src="covid.js"></script> -->
     <script >
         function redirectionSimulation(){
         document.location.href="covid.html"; 
         }
+        
     </script>
 </html>
