@@ -18,6 +18,7 @@ var maxPopCritique = 50000
 var maxNb = 30000
 var tabAge = [];
 var pauseButton = document.getElementById('pause')
+var graphButton = document.getElementById('graph')
 var semainesMax = 100;
 var deathTab = [];
 var tabSemaine = [];
@@ -55,12 +56,32 @@ function togglePause(){
     }
 }
 
+
+function toggleGraph(){
+    textGraph = document.getElementById('zone-graph')
+    if(textGraph.style.display == ""){
+        textGraph.style.display = "none"
+        graphButton.innerHTML = "Afficher détails"
+    } else {
+        textGraph.style.display = ""
+        graphButton.innerHTML = "Cacher détails"
+    }
+}
+
+
 function simulate(){
+    currentlySickTab = []
+    deathTab = []
+    curedTab = []
+    totalSickTab = []
+    tabSemaine = []
+    
+    
     document.getElementById('start').innerHTML = 'Relancer'
     simulation.innerHTML = ""
     clearInterval(pid)
     iconSize=350;
-    var i = 0
+    var week = 0
     initPop = parseInt($('#populationMalade')[0].value)
     total = initPop
     var objetTitre = document.getElementsByClassName("header")
@@ -135,18 +156,18 @@ function simulate(){
             return
         }
         
-        if(i == semainesMax-1) clearInterval(pid)
+        if(week == semainesMax-1) clearInterval(pid)
         var r0 = $('#r0')[0].value
         var nb = parseInt(nbCanInfect*r0)
         worstNb = parseInt((worstNb)*r0)
 
         if(nb > maxNb){
-            alert("Limite de malade supplémentaire par semaine atteinte.")
+            alert("Limite de malades supplémentaires par semaine atteinte.")
             clearInterval(pid)
             return
         }
 
-        appendChilds(simulation, genMultipleEltIcon(nb, i))
+        appendChilds(simulation, genMultipleEltIcon(nb, week))
         // $('.icon').css('transition',2+'s');
         adaptiveSize()
 
@@ -159,21 +180,17 @@ function simulate(){
         var cured = $('.immune').length
         
         var mortality = parseInt(100*morts/total)
-        objetTitre[0].innerHTML=i+1+" semaines"
+        objetTitre[0].innerHTML=week+1+" semaines"
         
         objetTitre[1].innerHTML=total+" cas cumulés ("+"+"+nb+") dont "+cured+" <b style='color:#56c774'>immunisés</b>, "+morts+" ("+mortality+"%) <b>morts</b>, "+nbCanInfect+" malades actuels"
         //objetTitre[1].innerHTML += "<br>Pire scénario : " + worstTotal + " malades (+"+worstNb+")"
-        tabSemaine.push(i+1);
+        tabSemaine.push(week+1);
         deathTab.push(parseInt(morts));
         totalSickTab.push(total);
         curedTab.push(cured);
         currentlySickTab.push(nbCanInfect)
-
-
         generateDeathChart()
-
-        
-        i++
+        week++        
     }, 4000)
 }
 
@@ -254,93 +271,100 @@ function getStyleAttributeByClassName(classname, attr){
     return (value);
 }
 
-//// charts
-function generateDeathChart()
-{
-    var deathChart = document.getElementById('death-chart');
-    var myDeathChart = new Chart(deathChart, 
-    {
-        type: 'line',
-        data: 
-        {
-            labels: tabSemaine,
-            datasets:
-            [{
-                data: deathTab,
-                label:"morts",
-                borderColor: "#2b2a2a",
-                fill: false,
-            }]
-        },
-        options: 
-        {
-            title: 
-            {
-            display: true,
-            text: 'Morts cumulées du virus'
-            },
-            cubicInterpolationMode:"monotone",
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        stepSize: 50,
-                    }
-                }]
-            }
-            ,
-            responsive:"true",
-        }
-    });
-    var sickChart = document.getElementById('sick-chart');
-    var mySickChart = new Chart(sickChart, 
-    {
-        type: 'line',
-        data: 
-        {
-            labels: tabSemaine,
-            datasets:
-            [{
-                data: currentlySickTab,
-                label:"Malades Actuels",
-                borderColor: "#be3135",
-                fill: false,
-            },
-            {
-                data: totalSickTab,
-                label:"Cas Cumulés",
-                borderColor: "#a061d2",
-                fill: false, 
-            },
-            {
-                data: curedTab,
-                label:"Guéris",
-                borderColor: "#1df177",
-                fill: false, 
-            }]
-        },
-        options: 
-        {
-            title: 
-            {
-            display: true,
-            text: 'Suivi des cas'
-            },
-            cubicInterpolationMode:"monotone",
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        stepSize: 1000,
-                    }
-                }]
-            }
-            ,
-            responsive:"true",
-            responsiveAnimationDuration: 500,
-            maintainAspectRatio: false,
 
 
+var deathChart = document.getElementById('death-chart');
+var sickChart = document.getElementById('sick-chart');
+var myDeathChart = new Chart(deathChart, {
+    type: 'line',
+    data: 
+    {
+        labels: tabSemaine,
+        datasets:
+        [{
+            data: deathTab,
+            label:"morts",
+            borderColor: "#2b2a2a",
+            fill: false,
+        }]
+    },
+    options: 
+    {
+        title: 
+        {
+        display: true,
+        text: 'Morts cumulées du virus'
+        },
+        cubicInterpolationMode:"monotone",
+        scales: {
+            yAxes: [{
+                ticks: {
+                    stepSize: 50,
+                }
+            }]
         }
-    });
+        ,
+        responsive:"true",
+    }
+});
     
+var mySickChart = new Chart(sickChart, {
+    type: 'line',
+    data: 
+    {
+        labels: tabSemaine,
+        datasets:
+        [{
+            data: currentlySickTab,
+            label:"Malades Actuels",
+            borderColor: "#be3135",
+            fill: false,
+        },
+        {
+            data: totalSickTab,
+            label:"Total des cas",
+            borderColor: "#cecece"
+        },
+        {
+            data: curedTab,
+            label:"Guéris",
+            borderColor: "#1df177",
+            fill: false, 
+        }]
+    },
+    options: 
+    {
+        title: 
+        {
+        display: true,
+        text: 'Suivi des cas'
+        },
+        cubicInterpolationMode:"monotone",
+        scales: {
+            yAxes: [{
+                ticks: {
+                    stepSize: 1000,
+                }
+            }]
+        }
+        ,
+        responsive:"true",
+        responsiveAnimationDuration: 500,
+        maintainAspectRatio: false,
 
+
+    }
+});
+
+//// charts
+function generateDeathChart(){
+    mySickChart.data.labels = tabSemaine
+    mySickChart.data.datasets[0].data = currentlySickTab
+    mySickChart.data.datasets[1].data = totalSickTab
+    mySickChart.data.datasets[2].data = curedTab
+    mySickChart.update()
+
+    myDeathChart.data.labels = tabSemaine
+    myDeathChart.data.datasets[0].data = deathTab
+    myDeathChart.update()
 }

@@ -23,44 +23,39 @@
                     <div class="col-6 col-sm-4 col-lg-2">
                         <button type="button" class="btn btn-primary btn-block" id="start" onclick="simulate()">Lancer</button>
                         <button type="button" class="btn btn-warning btn-block" id="pause" paused=false onclick="togglePause()">Pause</button>
+                        <button type="button" class="btn btn-secondary btn-block" id="graph" displayed=false onclick="toggleGraph()">Afficher Détails</button>
                     </div>
                     <div class="col">
                         <label>
-                        <a href="#" data-toggle="tooltip" title="Si ce nombre est proche de 1 l'épidémie peut s'arrêter spontanément car les malades guérissent trop rapidement"> 
+                            <a href="#" data-toggle="tooltip" title="Si ce nombre est proche de 1 l'épidémie peut s'arrêter spontanément car les malades guérissent trop rapidement"> 
                             Nombre initial de malade(s)
     
 
-                        </a>
+                            </a>
                         </label>
                         <input class="form-control" id="populationMalade"  type="number" min="1" max="1000" step="1" value="1"/>
                     </div>
                     <div class="col ">
                         <label>
                             <a href="#" data-toggle="tooltip" title="Nombre moyen de personnes que contamine un malade. Le covid-19 est entre 2 et 4 sans mesures particulières et autour de 0.5 avec un confinement"> R (Taux de contamination)
-                            <!--
-                            <span>
-                                
-                            </span>
-                        -->
-                        </a> </label> 
+                            
+                            </a> 
+                        </label> 
                         <input class="form-control" id="r0"  type="number" min="0" max="2.5" step="0.1" value="2"/>
                     </div>
                     <div class="col">
                         
                         <label> <a href="#" data-toggle="tooltip" title="Taille approximative de la population dans laquelle se propage le virus : un nombre trop grand peut engendrer un blocage du navigateur">Population totale (approximative)
-                            <!--
-                            <span>Taille approximative de la population dans laquelle se propage le virus : un nombre trop grand peut engendrer un blocage du navigateur</span>
-                            -->
+                            
                         </label></a>
                         <input class="form-control" id="populationMax"  type="number" min="20" max="30000" step="1" value="25000"/>
                     </div>
                     
                     
                 </div>
-                <div class="row">
+                <div class="row" id="zone-graph" style="display: none;">
                     <div class="col-xs-12 col-lg-6">
                       <canvas id="death-chart" width="200" height="100"></canvas>
-                
                     </div>
                     <div class="col-xs-12 col-lg-6">
                       <canvas id="sick-chart" width="200" height="100"></canvas>
