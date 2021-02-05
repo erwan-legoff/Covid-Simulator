@@ -157,7 +157,21 @@ function simulate(){
         }
         
         if(week == semainesMax-1) clearInterval(pid)
-        var r0 = $('#r0')[0].value
+
+        var r0saved = $('#r0')[0].value
+        if(r0saved<=1.2)
+        {
+            r0= r0saved-0.2;
+        }
+        else if(r0saved<1.7)
+        {
+            r0=r0saved-0.1;
+            
+        }
+        else{
+            r0=r0saved;
+        }
+   
         var nb = parseInt(nbCanInfect*r0)
         worstNb = parseInt((worstNb)*r0)
 
